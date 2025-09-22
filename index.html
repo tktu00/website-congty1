@@ -10,6 +10,8 @@
   <style>
     body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
     .container { max-width: 1100px; }
+    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); }
+    .modal-content { background-color: #fff; margin: 10% auto; padding: 20px; border-radius: 1rem; max-width: 500px; }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -23,6 +25,7 @@
         <a href="#values" class="hover:text-indigo-600">Giá Trị Cốt Lõi</a>
         <a href="#contact" class="hover:text-indigo-600">Liên hệ</a>
       </nav>
+      <button id="openModalBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:shadow-md">Mời bạn nhận tư vấn</button>
     </div>
   </header>
 
@@ -75,9 +78,57 @@
   <section id="contact" class="py-16 bg-white border-t">
     <div class="container mx-auto px-4">
       <h2 class="text-3xl font-extrabold">Liên hệ</h2>
-      <div class=\"mt-6 space-y-4 max-w-lg\">\n        <p><strong>Địa chỉ đăng ký:</strong> Số 12 ngách 192/84 Hạ Đình, Phường Khương Đình, Thành phố Hà Nội, Việt Nam</p>\n        <p><strong>Mã số thuế:</strong> 0111156316</p>\n        <div class=\"mt-6\">\n          <iframe class=\"w-full h-72 rounded-2xl border\" loading=\"lazy\" allowfullscreen referrerpolicy=\"no-referrer-when-downgrade\" src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.032207642987!2d105.836963!3d21.030653!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab8c52f5b81f%3A0x8d8e1a6a2f1!2zSOG6o2kgxJDDtG5nLCBI4bqjaSDEkOG6oW5oLCBIw6AgTuG7mWksIFZpZXRuYW0!5e0!3m2!1svi!2svi!4v1700000000000\"></iframe>\n        </div>\n      </div>\n      <form action=\"https://formspree.io/f/xxxREPLACE_IDxxx\" method=\"POST\" class=\"mt-6 space-y-4 max-w-lg\">
+      <div class="mt-6 space-y-4 max-w-lg">
+        <p><strong>Địa chỉ:</strong><br/> Số 12 ngách 192/84 Hạ Đình, Phường Khương Đình, Thành phố Hà Nội, Việt Nam</p>
+        <p><strong>Mã số thuế:</strong><br/> 0111156316</p>
+        <div class="mt-6">
+          <iframe class="w-full h-72 rounded-2xl border" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.032207642987!2d105.836963!3d21.030653!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab8c52f5b81f%3A0x8d8e1a6a2f1!2zSOG6o2kgxJDDtG5nLCBI4bqjaSDEkOG6oW5oLCBIw6AgTuG7mWksIFZpZXRuYW0!5e0!3m2!1svi!2svi!4v1700000000000"></iframe>
+        </div>
+      </div>
+      <form action="https://formspree.io/f/xxxREPLACE_IDxxx" method="POST" class="mt-6 space-y-4 max-w-lg">
+        <div>
+          <label class="block text-sm font-medium">Họ tên</label>
+          <input name="name" required class="mt-1 w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Email</label>
+          <input type="email" name="email" required class="mt-1 w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Nội dung</label>
+          <textarea name="message" rows="4" class="mt-1 w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+        </div>
+        <button class="px-5 py-3 bg-indigo-600 text-white font-semibold rounded-xl shadow hover:shadow-lg">Gửi liên hệ</button>
+      </form>
     </div>
   </section>
+
+  <!-- Popup Modal -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span id="closeModalBtn" class="float-right text-gray-500 cursor-pointer">&times;</span>
+      <h2 class="text-xl font-bold mb-4">Mời bạn nhận tư vấn và báo giá miễn phí!</h2>
+      <form class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium">Họ tên của bạn</label>
+          <input type="text" class="mt-1 w-full px-4 py-2 border rounded-lg" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Số điện thoại</label>
+          <input type="tel" class="mt-1 w-full px-4 py-2 border rounded-lg" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Địa chỉ email</label>
+          <input type="email" class="mt-1 w-full px-4 py-2 border rounded-lg" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Nội dung liên hệ</label>
+          <textarea class="mt-1 w-full px-4 py-2 border rounded-lg" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="px-5 py-2 bg-indigo-600 text-white rounded-lg">Đăng ký</button>
+      </form>
+    </div>
+  </div>
 
   <footer class="py-10 border-t text-center text-sm text-gray-600">
     © <span id="year"></span> Công ty TNHH MTV Hội Viên Hạng Nhất. All rights reserved.
@@ -85,6 +136,69 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    const modal = document.getElementById('myModal');
+    const openModalBtn = document.getElementById('openModalBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    openModalBtn.onclick = () => { modal.style.display = 'block'; };
+    closeModalBtn.onclick = () => { modal.style.display = 'none'; };
+    window.onclick = (event) => { if (event.target == modal) { modal.style.display = 'none'; } };
   </script>
+  
+  <!-- Floating CTA Button -->
+  <button id="openQuoteModal" class="fixed bottom-5 right-5 z-50 px-4 py-3 rounded-full shadow-lg bg-indigo-600 text-white font-semibold hover:shadow-xl">
+    Mời bạn nhận tư vấn & báo giá miễn phí!
+  </button>
+
+  <!-- Quote Modal -->
+  <div id="quoteModal" class="fixed inset-0 z-50 hidden" aria-hidden="true">
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="relative mx-auto mt-24 w-[90%] max-w-xl bg-white rounded-2xl shadow-xl">
+      <div class="flex items-center justify-between px-6 py-4 border-b">
+        <h3 class="text-lg font-bold">Nhận tư vấn & báo giá miễn phí</h3>
+        <button id="closeQuoteModal" class="p-2 rounded-lg hover:bg-gray-100" aria-label="Đóng">✕</button>
+      </div>
+      <form action="https://formspree.io/f/xxxREPLACE_IDxxx" method="POST" class="p-6 space-y-4">
+        <div>
+          <label class="block text-sm font-medium">Họ tên của bạn</label>
+          <input name="name" required class="mt-1 w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Ví dụ: Nguyễn Văn A" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Số điện thoại</label>
+          <input name="phone" required class="mt-1 w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Ví dụ: 09xx xxx xxx" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Địa chỉ email</label>
+          <input type="email" name="email" required class="mt-1 w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="email@congty.vn" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Nội dung liên hệ</label>
+          <textarea name="message" rows="4" class="mt-1 w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Bạn cần tư vấn/báo giá cho hạng mục nào?"></textarea>
+        </div>
+        <div class="flex items-center justify-between gap-3">
+          <p class="text-sm text-gray-500">Chúng tôi sẽ phản hồi trong 24h.</p>
+          <button class="px-5 py-3 bg-indigo-600 text-white font-semibold rounded-xl shadow hover:shadow-lg">Đăng ký</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const openBtn = document.getElementById('openQuoteModal');
+      const modal = document.getElementById('quoteModal');
+      const closeBtn = document.getElementById('closeQuoteModal');
+
+      function open(){ modal.classList.remove('hidden'); document.body.classList.add('overflow-hidden'); }
+      function close(){ modal.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); }
+
+      openBtn?.addEventListener('click', open);
+      closeBtn?.addEventListener('click', close);
+      modal?.addEventListener('click', (e)=>{ if(e.target === modal) close(); });
+      document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') close(); });
+    })();
+  </script>
+
 </body>
 </html>
